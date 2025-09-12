@@ -1,0 +1,89 @@
+[
+  { "key": "AMZ_Cookie_Accept_Button",
+    "value": "//*[@id='sp-cc-accept']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Home_Search_Input",
+    "value": "//*[@id='twotabsearchtextbox']",
+    "type": "xpath" },
+  { "key": "AMZ_Home_Search_Submit",
+    "value": "//*[@id='nav-search-submit-button']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Login_Email_Input",
+    "value": "//*[@id='ap_email' or @id='ap-credential-autofill-hint']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Login_Continue_Button",
+    "value": "//*[@id='continue']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Login_Password_Input",
+    "value": "//*[@id='ap_password']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Login_SignIn_Button",
+    "value": "//*[@id='signInSubmit']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Sort_Dropdown",
+    "value": "//*[@id='s-result-sort-select']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Sort_Price_LowToHigh_Option",
+    "value": "//select[@id='s-result-sort-select']/option[@value='price-asc-rank' or @value='price-asc-rank']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Sort_Avg_Review_Option",
+    "value": "//select[@id='s-result-sort-select']/option[@value='review-rank']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Filter_MinPrice_Input",
+    "value": "//*[@id='low-price']",
+    "type": "xpath"},
+  { "key": "AMZ_Filter_MaxPrice_Input",
+    "value": "//*[@id='high-price']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Filter_Price_Go_Button",
+    "value": "//input[@class='a-button-input' and @type='submit' and contains(@aria-labelledby,'a-autoid')]",
+    "type": "xpath" },
+
+  { "key": "AMZ_Search_Result_Items",
+    "value": "//div[@data-component-type='s-search-result' and .//h2]",
+    "type": "xpath" },
+  { "key": "AMZ_Search_Result_Item_Link_ByIndex",
+    "value": "(//div[@data-component-type='s-search-result']//h2/a)[{index}]",
+    "type": "xpath" },
+
+  { "key": "AMZ_Search_Result_Item_7_Link",
+    "value": "(//div[@data-component-type='s-search-result']//h2/a)[7]",
+    "type": "xpath" },
+
+  { "key": "AMZ_Result_Item_Price_Node",
+    "value": ".//span[contains(@class,'a-price')]//span[@class='a-offscreen']",
+    "type": "xpath" },
+  { "key": "AMZ_Result_Item_ReviewCount_Node",
+    "value": ".//span[contains(@aria-label,'değerlendirme') or contains(@aria-label,'rating')]/following::span[contains(@class,'a-size-base')][1]", "type": "xpath" },
+
+  { "key": "AMZ_Product_AddToCart_Button",
+    "value": "//*[@id='add-to-cart-button']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Product_GoToCart",
+    "value": "//*[@id='nav-cart']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Cart_Count",
+    "value": "//*[@id='nav-cart-count']",
+    "type": "xpath" },
+
+  { "key": "AMZ_Product_SeeAllReviews_Link",
+    "value": "//a[@data-hook='see-all-reviews-link-foot' or contains(@href,'customerReviews')]",
+    "type": "xpath" },
+
+  { "key": "AMZ_Review_Texts",
+    "value": "//div[@data-hook='review']//span[@data-hook='review-body']//span",
+    "type": "xpath" }
+]
+

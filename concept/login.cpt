@@ -1,0 +1,8 @@
+Created by sinan on 9.09.2025
+
+This is a concept file with following syntax for each concept.
+# login olunur
+* "1" second wait
+//* Wait for "key" and click
+//* Write "text" to the "key" and clear area
+

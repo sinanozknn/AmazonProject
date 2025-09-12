@@ -1,0 +1,79 @@
+# Maven build artifacts
+target/
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Log files
+logs/
+*.log
+
+# Test reports (will be generated during runtime)
+reports/
+
+# Node modules (if any)
+node_modules/
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+
+# Docker files themselves
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Documentation
+README.md
+*.md
+
+# Backup files
+*.bak
+*.backup
+
+# Environment specific files
+.env
+.env.local
+.env.development
+.env.production
+
+# Build output directories
+out/
+build/
+
+# WebDriver executables (will use system drivers in container)
+webDriver/
+drivers/
+
+# Cache directories
+.cache/
+.m2/
+
+# IDE workspace files
+*.sublime-project
+*.sublime-workspace
