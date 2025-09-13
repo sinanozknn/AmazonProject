@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 
 public class ReviewPage extends  StepImplementation {
 
-        // Yorum item'ları
+
         private final By reviewItems        = By.cssSelector("[data-hook='review-collapsed']");
-        // Boş durum / konteyner sinyalleri (yorum yoksa bunlardan biri görünebilir)
+
         private final By emptyState         = By.cssSelector("#cm-cr-empty-state, div[data-hook='no-reviews-section']");
         private final By reviewsContainer   = By.id("cm_cr-review_list");
 
@@ -29,7 +29,7 @@ public class ReviewPage extends  StepImplementation {
 
     /** Sayfada görünen ilk N yorumu topla (yoksa boş liste döner). */
         public List<String> collectTopNReviews(int maxCount) {
-            // 10 sn boyunca ya bir yorum, ya boş-durum, ya da konteyner görünmesini bekle
+
             try {
                 new WebDriverWait(driver,10).until(drv ->
                         !drv.findElements(reviewItems).isEmpty()
@@ -99,8 +99,8 @@ public class ReviewPage extends  StepImplementation {
         driver.navigate().back();
         return new ProductPage();
     }
-    // 7) Ürün sayfasına geri dön
-    @Step("ürün sayfasına geri dönerim")
+
+    @Step("ürün sayfasına geri dönülür")
     public void backToProduct2() {
       backToProduct();
     }

@@ -198,7 +198,7 @@ public class StepImplementation extends BaseMethods {
                 logger.info(String.format("\nImage of '%s' element at '%s' has not been loaded.\\n",imageWebElement, imageWebElement.getLocation()));
 
             }else {
-                //log.info(String.format("\nImage at '%s' has been loaded successfully.\n",image, image.getLocation()));
+
             }
 
         }else {
@@ -289,13 +289,12 @@ public class StepImplementation extends BaseMethods {
         ArrayList<String> handles = new ArrayList<>(driver.getWindowHandles());
         if (handles.size() > 1) {
             String current = driver.getWindowHandle();
-            // mevcut sekmeyi kapat
+
             driver.close();
-            // kalan ilk sekmeye geç
+
             handles = new ArrayList<>(driver.getWindowHandles());
             driver.switchTo().window(handles.get(0));
         } else {
-            // tek sekmeyse bir kez geri gitmek yeterli
             driver.navigate().back();
         }
     }

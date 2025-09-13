@@ -26,9 +26,9 @@ public class BaseTest {
             ? System.getenv("browser").toLowerCase()
             : "chrome";
 
-    // *** GEREKLI: Gauge'ın çağıracağı parametresiz constructor
+
     public BaseTest() {
-        // boş bırak
+
     }
 
     @BeforeScenario
@@ -57,7 +57,7 @@ public class BaseTest {
                 break;
             }
             default: {
-                // tanınmayan değer gelirse chrome ile devam et
+
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--incognito");
                 System.setProperty("webdriver.chrome.driver", "webDriver/chromedriver.exe");
@@ -67,8 +67,8 @@ public class BaseTest {
 
         driver.manage().window().maximize();
 
-        // Selenium 4: Duration tabanlı
-        webDriverWait = new WebDriverWait(driver, 45);
+
+        webDriverWait = new WebDriverWait(driver, 20);
         // webDriverWait.pollingEvery(Duration.ofMillis(150));
     }
 

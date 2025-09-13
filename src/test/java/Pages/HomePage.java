@@ -45,8 +45,8 @@ public class HomePage extends StepImplementation {
             click(searchButton);
         }
 
-    // 9) Arama sonuçlarına geri dön
-    @Step("arama sonuçlarına geri dönerim")
+
+    @Step("arama sonuçlarına geri dönülür")
     public void backToResults() {
         closeCurrentTabIfMoreThanOneAndSwitch();
     }

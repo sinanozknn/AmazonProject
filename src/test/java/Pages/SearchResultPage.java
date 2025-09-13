@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class SearchResultPage extends StepImplementation {
 
-    // private String lastKeyword;
+
     private static String lastKeyword;
 
 
@@ -27,7 +27,7 @@ public class SearchResultPage extends StepImplementation {
     private final By maxPriceInput = By.cssSelector("#high-price, input[name='high-price']");
     private final By sortSelect   = By.id("s-result-sort-select");
 
-    // ---- Wait helpers ----
+
     private void waitCards() {
         webDriverWait.until((ExpectedCondition<Boolean>) d -> d.findElements(productCards).size() > 0);
     }
@@ -51,12 +51,12 @@ public class SearchResultPage extends StepImplementation {
         }
     }
 
-    // ---- Pagination / scroll / safe click ----
+
     private void ensureAtLeastNCards(int n) {
         int guard = 0, sameCountStreak = 0, last = -1;
         while (collectProductCards().size() < n && guard < 12) {
             ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
-            try { Thread.sleep(700); } catch (InterruptedException ignored) {}
+            try { Thread.sleep(300); } catch (InterruptedException ignored) {}
             int now = collectProductCards().size();
             sameCountStreak = (now == last) ? sameCountStreak + 1 : 0;
             last = now;
@@ -91,7 +91,7 @@ public class SearchResultPage extends StepImplementation {
         }
     }
 
-    // ---- Card scraping ----
+
     private WebElement pickBestLink(WebElement card) {
         List<WebElement> dp = card.findElements(By.cssSelector("a[href*='/dp/']"));
         if (!dp.isEmpty()) return dp.get(0);
@@ -157,7 +157,7 @@ public class SearchResultPage extends StepImplementation {
                 if (!digits.isBlank()) return Integer.parseInt(digits);
             } catch (Exception ignored) {}
         }
-        // yıldız bloğunun kardeşindeki sayı (son çare)
+
         try {
             WebElement el = root.findElement(By.cssSelector("span.a-icon-alt"));
             WebElement parent = el.findElement(By.xpath("./ancestor::span[contains(@class,'a-declarative') or contains(@class,'a-icon-row')]"));
@@ -201,7 +201,7 @@ public class SearchResultPage extends StepImplementation {
         ).isEmpty();
     }
 
-    // ---- Card model ----
+
     private static class ProductCard {
         final WebElement root;
         final String title;
@@ -279,24 +279,23 @@ public class SearchResultPage extends StepImplementation {
 
 
 
-    /** En çok yorumlu ilk topN üründen, fiyat artan sıralı liste döndür. Boşsa sonraki sayfayı dener. */
     private List<ProductCard> topReviewedSortedByPriceAsc(int topN) {
         List<ProductCard> cards = buildCards();
         if (cards.isEmpty()) return cards;
 
-        // yorum sayısı azalan
+
         cards.sort(Comparator.comparingInt((ProductCard c) -> c.reviews).reversed());
 
-        // ilk topN
+
         int n = Math.max(1, topN);
         List<ProductCard> top = cards.stream()
                 .limit(n)
                 .collect(Collectors.toList());
 
-        // bu grubu fiyat artan (fiyat 0 olanları sona it)
+
         top.sort(Comparator.comparingInt((ProductCard c) -> c.priceTL == 0 ? Integer.MAX_VALUE : c.priceTL));
 
-        // tamamen 0 fiyat ise, bir sonraki sayfayı dene
+
         boolean allZero = top.stream().allMatch(c -> c.priceTL == 0);
         if ((top.isEmpty() || allZero) && goNextPageIfAvailable()) {
             return topReviewedSortedByPriceAsc(topN);
@@ -304,7 +303,7 @@ public class SearchResultPage extends StepImplementation {
         return top;
     }
 
-    // ---- Actions on list ----
+
     public void openNthProduct(int n) {
         // kartlar yeterli değilse aşağı kaydır
         ensureAtLeastNCards(n + 2);
@@ -315,7 +314,7 @@ public class SearchResultPage extends StepImplementation {
         safeOpenLink(link);
     }
 
-    /** “En çok yorumlu → en ucuz” grubunda belirtilen sıradaki adayı aç (1-index). */
+
     public void openTopReviewedByRank(int rank) {
         resetToBareSearch(); // filtreleri temizler
         List<ProductCard> top = topReviewedSortedByPriceAsc(12);
@@ -327,12 +326,12 @@ public class SearchResultPage extends StepImplementation {
     }
 
 
-    /** Geriye dönük uyumluluk: 1. adayı aç. */
+
     public void openCheapestAmongTopReviewed() {
         openTopReviewedByRank(1);
     }
 
-    // ---- Filters / sorting ----
+
     public void applyPriceRange(String keyword, int minTry, int maxTry) throws UnsupportedEncodingException {
         try {
             type(minPriceInput, String.valueOf(minTry));
@@ -359,26 +358,25 @@ public class SearchResultPage extends StepImplementation {
         waitCards();
     }
 
-    // ---- Gauge steps ----
-    @Step("<keyword> anahtar kelimesiyle arama yaparım")
+
+    @Step("<keyword> anahtar kelimesiyle arama yapılır")
     public void search(String keyword) throws UnsupportedEncodingException {
         lastKeyword = keyword;
         new HomePage().search(keyword);
-        // Eğer HomePage.search kendi içinde beklemiyorsa aşağıyı aç:
-        // waitForResultsRobust(keyword);
+
     }
 
-    @Step("fiyat aralığını <min> - <max> TRY olarak uygularım")
+    @Step("fiyat aralığını <min> - <max> TRY olarak uygulanır")
     public void applyPriceRange2(int min, int max) throws UnsupportedEncodingException {
         applyPriceRange(lastKeyword, min, max);
     }
 
-    @Step("sonuçları en düşük fiyata göre sıralarım")
+    @Step("sonuçları en düşük fiyata göre sıralanır")
     public void sortLowToHigh() {
         sortByPriceLowToHigh();
     }
 
-    @Step("sonuçlardaki 7. ürünü açarım")
+    @Step("sonuçlardaki 7. ürün açılır")
     public void openSeventhProduct() {
         openNthProduct(7);
         switchToNewTabIfOpened();

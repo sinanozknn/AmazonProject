@@ -19,32 +19,32 @@ public class ProductPage  extends StepImplementation {
 
 
 
-    // Yorum linki – iki şablon
+
     private final By seeAllReviewsLink = By.cssSelector(
             "#reviews-medley-footer a[data-hook='see-all-reviews-link-foot'], a[data-hook='see-all-reviews-link-foot']"
     );
 
-    // Sepete ekle butonlarının olası id/selector’ları
+
     private final By addToCartBtn = By.cssSelector(
             "#add-to-cart-button, #add-to-cart-button-ubb, input#add-to-cart-button-ubb, input[name='submit.add-to-cart']"
     );
 
-    // Buying options (alternatif satıcılardan ekleme) linki
+
     private final By buyingOptionsLink = By.cssSelector(
             "#buybox-see-all-buying-choices-announce, a#buybox-see-all-buying-choices-announce"
     );
 
-    // Buying options içindeki ATC
+
     private final By buyingOptionsAddToCart = By.cssSelector(
             "#aod-offer-list input[name='submit.addToCart'], input[name='submit.addToCart']"
     );
 
-    // Koruma planı / upsell modalında “Hayır / Şimdi değil” vb.
+
     private final By noCoverageBtns = By.cssSelector(
             "#attachSiNoCoverage, [data-action='aod-close'], button[aria-label*='Hayır'], input[aria-labelledby*='attachSiNoCoverage-announce']"
     );
 
-    // Sepet sayacı
+
     private final By cartCount = By.id("nav-cart-count");
 
 
@@ -78,7 +78,7 @@ public class ProductPage  extends StepImplementation {
             click((By) link);
             return new ReviewPage();
         }
-        // Fallback: ASIN ile review sayfasına git
+
         String asin = getASIN();
         if (asin == null || asin.isBlank()) {
             throw new IllegalStateException("Yorum linki yok ve ASIN bulunamadı.");
@@ -91,17 +91,17 @@ public class ProductPage  extends StepImplementation {
     public boolean addToCart2() throws InterruptedException {
         int before = currentCartCount();
 
-        // 1) Direkt dene
+
         if (tryClickAddToCartAndConfirm(before)) return true;
 
-        // 2) Varyasyonlar varsa birini seç ve tekrar dene
+
         trySelectAnyVariant();
         if (tryClickAddToCartAndConfirm(before)) return true;
 
-        // 3) Buying options üzerinden dene
+
         if (tryBuyingOptionsAndConfirm(before)) return true;
 
-        // 4) Son bir kez daha dene (bazı sayfalarda buton geç geliyor)
+
         sleep(500);
         if (tryClickAddToCartAndConfirm(before)) return true;
 
@@ -113,7 +113,6 @@ public class ProductPage  extends StepImplementation {
             waitVisible(addToCartBtn);
             click(addToCartBtn);
 
-            // Olası koruma planı modalı
             closeProtectionIfShown();
 
             // Başarı mesajı ya da sepet sayacı artışı
@@ -124,8 +123,8 @@ public class ProductPage  extends StepImplementation {
 
     private void closeProtectionIfShown() {
         try {
-            // Modal kısa süre sonra gelebilir
-            sleep(400);
+
+            sleep(300);
             List<WebElement> btns = driver.findElements(noCoverageBtns);
             if (!btns.isEmpty()) {
                 try { click((By) btns.get(0)); } catch (Exception ignored) {}
@@ -174,7 +173,7 @@ public class ProductPage  extends StepImplementation {
                 } catch (Exception ignored) {}
             }
         }
-        // Swatch butonları
+
         List<By> swatches = Arrays.asList(
                 By.cssSelector("[id^='variation_'] li:not(.a-selected) [role='button']"),
                 By.cssSelector("[id^='variation_'] li:not(.a-selected)")
@@ -194,10 +193,10 @@ public class ProductPage  extends StepImplementation {
             if (linkEls.isEmpty()) return false;
             click((By) linkEls.get(0));
 
-            // Buying options paneli / sayfası gelsin
+
             webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("aod-container")));
 
-            // İlk teklif → Add to Cart
+
             waitVisible(buyingOptionsAddToCart);
             click(buyingOptionsAddToCart);
 
@@ -208,7 +207,7 @@ public class ProductPage  extends StepImplementation {
         return false;
     }
 
-    /** Sayfadaki ASIN’i bul. */
+
     private String getASIN() {
         try {
             return driver.findElement(By.id("ASIN")).getAttribute("value");
@@ -230,8 +229,8 @@ public class ProductPage  extends StepImplementation {
         }
         return null;
     }
-    // 6) Yorumları yaz
-    @Step("ürünün tüm yorumlarını açıp ilk 20'sini dosyaya yazarım")
+
+    @Step("ürünün tüm yorumlarını açıp dosyaya yazılır")
     public void dumpReviews() {
         ProductPage product = new ProductPage();
         ReviewPage rev = product.openAllReviews();
@@ -240,8 +239,8 @@ public class ProductPage  extends StepImplementation {
         System.out.println("Yorumlar kaydedildi: " + file.toAbsolutePath());
     }
 
-    // 8) Sepete ekle (ilk ürün)
-    @Step("ürünü sepete eklerim")
+
+    @Step("ürün sepete eklenir")
     public void addToCart() throws InterruptedException {
         boolean added = addToCart2();
         if (!added) throw new AssertionError("Ürün sepete eklenemedi.");
@@ -249,13 +248,13 @@ public class ProductPage  extends StepImplementation {
 
 
 
-    @Step("en çok yorumlu ürünler arasından en ucuz olanını sepete eklerim")
+    @Step("en çok yorumlu ürünler arasından en ucuz olanını sepete eklenir")
     public void addCheapestFromTopReviewed() throws InterruptedException {
         // ürün eklendikten sonra aramaya dön
         new HomePage().backToResults();
 
         SearchResultPage results = new SearchResultPage();
-        results.openCheapestAmongTopReviewed();   // resetToBareSearch() içeride çağrılıyor (static lastKeyword sayesinde OK)
+        results.openCheapestAmongTopReviewed();
         switchToNewTabIfOpened();
 
         boolean added = new ProductPage().addToCart2();
