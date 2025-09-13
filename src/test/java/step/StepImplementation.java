@@ -278,6 +278,8 @@ public class StepImplementation extends BaseMethods {
         if (handles.size() > 1) {
             driver.switchTo().window(handles.get(handles.size() - 1));
         }
+
+
     }
 
     /** Aktif sekmeyi kapatıp (eğer 1'den fazlaysa) diğerine geç. */
