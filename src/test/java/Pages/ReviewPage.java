@@ -27,7 +27,7 @@ public class ReviewPage extends  StepImplementation {
 
 
 
-    /** Sayfada görünen ilk N yorumu topla (yoksa boş liste döner). */
+
         public List<String> collectTopNReviews(int maxCount) {
 
             try {
@@ -61,7 +61,7 @@ public class ReviewPage extends  StepImplementation {
                     .collect(Collectors.toList());
         }
 
-        /** Yorumları proje kökünde /reports klasörüne .txt olarak yazar. */
+
         public Path writeReviewsToNotepad(List<String> reviews, String fileName) {
             try {
                 Path reports = Paths.get(System.getProperty("user.dir"), "reports");
@@ -94,7 +94,7 @@ public class ReviewPage extends  StepImplementation {
             }
             return sb.toString();
         }
-    /** Ürün detay sayfasına geri dön. */
+
     public ProductPage backToProduct() {
         driver.navigate().back();
         return new ProductPage();

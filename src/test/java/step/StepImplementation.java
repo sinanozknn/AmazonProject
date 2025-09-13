@@ -30,11 +30,15 @@ public class StepImplementation extends BaseMethods {
 
     @Step("Go to <url>")
     public void goToUrl(String url){
-
         driver.get(url);
         logger.info(url + " going to.");
 
+        try {
+            new Pages.HomePage().acceptCookiesIfPresent();
+            new Pages.HomePage().ensureOnHome();
+        } catch (Exception ignored) { }
     }
+
 
     @Step("Wait for <key> and click")
     public void checkElementVisibiltyAndClick(String key){
@@ -263,7 +267,7 @@ public class StepImplementation extends BaseMethods {
         el.clear();
         el.sendKeys(text);
     }
-    /** Elementi ekrana kaydır (merkeze) */
+
     protected void scrollIntoView(WebElement el) {
         ((JavascriptExecutor) driver)
                 .executeScript("arguments[0].scrollIntoView({block:'center'});", el);
@@ -281,7 +285,7 @@ public class StepImplementation extends BaseMethods {
 
     }
 
-    /** Aktif sekmeyi kapatıp (eğer 1'den fazlaysa) diğerine geç. */
+
     public void closeCurrentTabIfMoreThanOneAndSwitch() {
         ArrayList<String> handles = new ArrayList<>(driver.getWindowHandles());
         if (handles.size() > 1) {
