@@ -17,7 +17,6 @@ Amazon
 * ürün sayfasına geri dönülür
 * ürün sepete eklenir
 * arama sonuçlarına geri dönülür
-* "5" second wait
 * en çok yorumlu ürünler arasından en ucuz olanını sepete eklenir
 
 

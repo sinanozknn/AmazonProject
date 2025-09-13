@@ -26,10 +26,6 @@ public class StepImplementation extends BaseMethods {
 
 
 
-    @Step("<second> second wait")
-    public void waitBySeconds(int seconds){
-        waitByMilliSeconds(seconds * 1000);
-    }
 
 
     @Step("Go to <url>")
