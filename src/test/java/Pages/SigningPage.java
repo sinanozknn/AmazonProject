@@ -4,9 +4,6 @@ import com.thoughtworks.gauge.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import step.StepImplementation;
-import java.util.Properties;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 
 public class SigningPage extends StepImplementation{
@@ -37,18 +34,9 @@ public class SigningPage extends StepImplementation{
         click(signInBtn);
     }
     @Step("Amazon'a giriş yapılır")
-    public void loginfunction() {
-        Properties prop = new Properties();
-        String pass = null;
-        String email = null;
-        try {
-            prop.load(new FileInputStream("config.properties"));
-            email = prop.getProperty("email");
-            pass = prop.getProperty("pass");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void login() {
+        String pass = "Sinan.11111";
+        String email = "sinanozkan.ie@gmail.com";
 
         HomePage homePage = new HomePage();
         homePage.acceptCookiesIfPresent();
