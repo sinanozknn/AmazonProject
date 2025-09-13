@@ -19,5 +19,3 @@ Amazon
 * arama sonuçlarına geri dönülür
 * en çok yorumlu ürünler arasından en ucuz olanını sepete eklenir
 
-
-..........
