@@ -57,8 +57,8 @@ public class StepImplementation extends BaseMethods {
     public boolean isElementVisible(String key, int timeout){
         ElementInfo elementInfo = StoreHelper.INSTANCE.findElementInfoByKey(key);
         try{
-            WebDriverWait wait = new WebDriverWait(driver,timeout);
-           waitVisibilityOfElementLocatedBy(ElementHelper.getElementInfoToBy(elementInfo));
+            WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(timeout));
+            waitVisibilityOfElementLocatedBy(ElementHelper.getElementInfoToBy(elementInfo));
             return true;
         }catch (Exception e){
             logger.info(key +" not visible");
@@ -69,7 +69,7 @@ public class StepImplementation extends BaseMethods {
     public boolean isElementClickable(String key, int timeout){
         ElementInfo elementInfo = StoreHelper.INSTANCE.findElementInfoByKey(key);
         try{
-            WebDriverWait wait = new WebDriverWait(driver,timeout);
+            WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(timeout));
             waitClickableOfElementLocatedBy(ElementHelper.getElementInfoToBy(elementInfo));
             return true;
         }catch (Exception e){

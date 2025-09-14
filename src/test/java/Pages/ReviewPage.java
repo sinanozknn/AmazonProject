@@ -31,11 +31,13 @@ public class ReviewPage extends  StepImplementation {
         public List<String> collectTopNReviews(int maxCount) {
 
             try {
-                new WebDriverWait(driver,10).until(drv ->
-                        !drv.findElements(reviewItems).isEmpty()
-                                || !drv.findElements(emptyState).isEmpty()
-                                || !drv.findElements(reviewsContainer).isEmpty()
-                );
+                new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(drv ->
+                                !drv.findElements(reviewItems).isEmpty()
+                                        || !drv.findElements(emptyState).isEmpty()
+                                        || !drv.findElements(reviewsContainer).isEmpty()
+                        );
+
             } catch (TimeoutException ignored) {
 
             }

@@ -1,6 +1,7 @@
 # Gauge + Java Web UI Test Projesi
 
-Bu proje, Amazon.com.tr web sitesi için Gauge framework'ü ve Java kullanılarak geliştirilmiş bir UI test otomasyon projesidir.
+Bu proje, Amazon.com.tr web sitesi için Gauge framework'ü ve Java kullanılarak geliştirilmiş bir UI test otomasyon projesidir. WebDriverManager kullanarak otomatik driver yönetimi sağlar.
+
 
 ## 📋 Gereksinimler
 
@@ -8,7 +9,7 @@ Bu proje, Amazon.com.tr web sitesi için Gauge framework'ü ve Java kullanılara
 - **Java 17** veya üzeri
 - **Maven 3.6+**
 - **Gauge** framework
-- **Chrome/Chromium** tarayıcı
+- **Chrome/Firefox/Edge** tarayıcı (WebDriverManager otomatik driver yönetimi)
 
 ### Docker ile Çalıştırma İçin
 - **Docker** (20.10+)
@@ -46,6 +47,14 @@ gauge run specs/AmazonCase.spec
 
 # Paralel çalıştırma (4 thread)
 gauge run --parallel -n 4 specs
+
+# Farklı tarayıcılarla çalıştırma
+browser=firefox gauge run specs
+browser=edge gauge run specs
+browser=chrome gauge run specs
+
+# Headless modda çalıştırma
+HEADLESS=true gauge run specs
 ```
 
 ### 2. Docker ile Çalıştırma
@@ -121,22 +130,20 @@ Testler çalıştırıldıktan sonra `reports/html-report/` dizininde HTML forma
 ## 🐛 Sorun Giderme
 
 ### Docker ile ilgili sorunlar:
-- Container içinde Chrome headless modda çalışır
-- Display sorunları yaşarsanız `--headless` modunu kontrol edin
-- Port çakışmaları için farklı portlar kullanın
+- Container içinde otomatik olarak headless modda çalışır
+- WebDriverManager otomatik olarak uygun driver'ı indirir
+- Display sorunları yaşarsanız `HEADLESS=true` environment variable'ını kontrol edin
 
 ### Yerel çalıştırma sorunları:
 - Java versiyonunu kontrol edin: `java -version`
 - Gauge kurulumunu kontrol edin: `gauge version`
-- WebDriver yollarını kontrol edin
+- WebDriverManager otomatik olarak driver'ları yönetir, manuel kurulum gerekmez
+- İnternet bağlantısı gereklidir (ilk çalıştırmada driver indirilir)
 
 ## 📝 Notlar
 
 - Bu proje sadece test amaçlıdır
-- CI/CD pipeline'ı dahil değildir
 - Production ortamında kullanmadan önce güvenlik ayarlarını gözden geçirin
-- Test verilerini gerçek verilerle değiştirmeyi unutmayın
-
 ---
 
 **Geliştirici Notu:** Proje Docker ile kullanıma hazırdır ve herhangi bir ek kurulum gerektirmez.

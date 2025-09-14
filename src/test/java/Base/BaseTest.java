@@ -3,6 +3,7 @@ package Base;
 import com.thoughtworks.gauge.AfterScenario;
 import com.thoughtworks.gauge.BeforeScenario;
 import com.thoughtworks.gauge.ExecutionContext;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -21,14 +22,13 @@ public class BaseTest {
     protected static WebDriverWait webDriverWait;
     protected static Logger logger = LogManager.getLogger(BaseTest.class);
 
-
+    // Çalıştırılacak tarayıcı: Varsayılan Chrome
     private final String browser = System.getenv("browser") != null
             ? System.getenv("browser").toLowerCase()
             : "chrome";
 
-
     public BaseTest() {
-
+        // Boş constructor Gauge için gerekli
     }
 
     @BeforeScenario
@@ -36,40 +36,37 @@ public class BaseTest {
 
         switch (browser) {
             case "chrome": {
+                WebDriverManager.chromedriver().setup(); // Chromedriver otomatik indir ve ayarla
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--incognito");
-                // Windows ise .exe doğru yolu ver
-                System.setProperty("webdriver.chrome.driver", "webDriver/chromedriver.exe");
+                chromeOptions.addArguments("--remote-allow-origins=*");
                 driver = new ChromeDriver(chromeOptions);
                 break;
             }
             case "firefox": {
+                WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addArguments("-private");
-                System.setProperty("webdriver.gecko.driver", "webDriver/geckodriver.exe");
                 driver = new FirefoxDriver(firefoxOptions);
                 break;
             }
             case "ie":
             case "internetexplorer": {
-                System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer.exe");
+                WebDriverManager.iedriver().setup();
                 driver = new InternetExplorerDriver();
                 break;
             }
             default: {
-
+                WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--incognito");
-                System.setProperty("webdriver.chrome.driver", "webDriver/chromedriver.exe");
+                chromeOptions.addArguments("--remote-allow-origins=*");
                 driver = new ChromeDriver(chromeOptions);
             }
         }
 
         driver.manage().window().maximize();
-
-
-        webDriverWait = new WebDriverWait(driver, 20);
-        // webDriverWait.pollingEvery(Duration.ofMillis(150));
+        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     @AfterScenario
