@@ -12,7 +12,7 @@ public class HomePage extends StepImplementation {
 
     private final By acceptCookiesBtn = By.id("sp-cc-accept");
 
-    // Header: hesap/giriş linki (SigningPage bunu bekliyor)
+
     private final By accountListLink  = By.id("nav-link-accountList");
 
 
