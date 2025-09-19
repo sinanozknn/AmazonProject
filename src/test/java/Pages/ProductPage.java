@@ -75,7 +75,7 @@ public class ProductPage  extends StepImplementation {
         }
         if (link != null) {
             try { scrollIntoView(link); } catch (Exception ignored) {}
-            click((By) link);
+            safeClick(link);
             return new ReviewPage();
         }
 
@@ -127,7 +127,7 @@ public class ProductPage  extends StepImplementation {
             sleep(300);
             List<WebElement> btns = driver.findElements(noCoverageBtns);
             if (!btns.isEmpty()) {
-                try { click((By) btns.get(0)); } catch (Exception ignored) {}
+                try { safeClick(btns.get(0)); } catch (Exception ignored) {}
             }
         } catch (Exception ignored) {}
     }
@@ -181,17 +181,30 @@ public class ProductPage  extends StepImplementation {
         for (By sw : swatches) {
             List<WebElement> els = driver.findElements(sw);
             if (!els.isEmpty()) {
-                try { click((By) els.get(0)); break; } catch (Exception ignored) {}
+                try { safeClick(els.get(0)); break; } catch (Exception ignored) {}
             }
         }
         sleep(300);
+    }
+
+    // ProductPage içine ekle
+    private void safeClick(WebElement el) {
+        try {
+            scrollIntoView(el);
+            el.click();
+        } catch (Exception e) {
+            try {
+                ((org.openqa.selenium.JavascriptExecutor) driver)
+                        .executeScript("arguments[0].click();", el);
+            } catch (Exception ignored) { }
+        }
     }
 
     private boolean tryBuyingOptionsAndConfirm(int before) {
         try {
             List<WebElement> linkEls = driver.findElements(buyingOptionsLink);
             if (linkEls.isEmpty()) return false;
-            click((By) linkEls.get(0));
+            safeClick(linkEls.get(0));
 
 
             webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("aod-container")));
